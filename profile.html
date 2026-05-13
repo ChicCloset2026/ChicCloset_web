@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="navbar">
+  <a href="index.html" class="logo">
+    <img src="images/logo.png" alt="ChicCloset Logo">
+  </a>
+  <ul class="nav-icons-links">
+    <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+    <li><a href="index.html#shopNow"><i class="fa-solid fa-store"></i> Shop Now</a></li>
+    <li><a href="index.html#policies"><i class="fa-solid fa-file-lines"></i> Policies</a></li>
+    <li><a href="favorites_page.html"><i class="fa-solid fa-heart"></i> Wishlist</a></li>
+    <li class="cart-item-nav">
+      <a href="cart.html" class="cart-link">
+        <i class="fa-solid fa-bag-shopping"></i> Cart
+        <span id="cart-count">0</span>
+      </a>
+    </li>
+    <li><a href="login.html" id="login-link"><i class="fa-solid fa-user"></i> Login</a></li>
+    <li><button id="logout-btn" onclick="logout()">Logout</button></li>
+  </ul>
+</div>
+
+<h1>My Profile</h1>
+
+<!-- ===== INFO VIEW (shown when profile exists) ===== -->
+<div id="profileInfo" class="profile-box" style="display:none;">
+  <p><strong>Name:</strong> <span id="profileName"></span></p>
+  <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+  <p><strong>Phone:</strong> <span id="profilePhone"></span></p>
+  <p><strong>Country:</strong> <span id="profileCountry"></span></p>
+  <p><strong>City:</strong> <span id="profileCity"></span></p>
+  <p><strong>Address:</strong> <span id="profileAddress"></span></p>
+  <button onclick="showEditForm()">Edit Info</button>
+</div>
+
+<!-- ===== EDIT / FILL FORM (shown when no profile or editing) ===== -->
+<div id="profileForm" class="profile-box" style="display:none;">
+  <p><strong>Email:</strong> <span id="formEmail"></span></p>
+
+  <label>First Name</label>
+  <input id="inputFirstName" type="text" placeholder="First name">
+
+  <label>Last Name</label>
+  <input id="inputLastName" type="text" placeholder="Last name">
+
+  <label>Phone</label>
+  <input id="inputPhone" type="text" placeholder="05XXXXXXXX" maxlength="10">
+
+  <label>Country</label>
+  <input id="inputCountry" type="text" placeholder="Country">
+
+  <label>City</label>
+  <input id="inputCity" type="text" placeholder="City">
+
+  <label>Address</label>
+  <input id="inputAddress" type="text" placeholder="Street name, building number">
+
+  <button onclick="saveProfile()">Save</button>
+
+<div class="field">
+  <label>Old Password</label>
+  <div class="pass-field">
+    <input id="oldPass" type="password" placeholder="Enter old password">
+    <button type="button" class="pass-icon-btn btn-eye" onclick="togglePass('oldPass', this)">
+      <i class="fa-solid fa-eye-slash"></i>
+    </button>
+    <button type="button" class="pass-icon-btn btn-clear" onclick="clearField('oldPass','oldPassError')">✖</button>
+  </div>
+  <div class="error-msg" id="oldPassError"></div>
+</div>
+
+<div class="field">
+  <label>New Password</label>
+  <div class="pass-field">
+    <input id="newPass" type="password" placeholder="8+ chars, 1 uppercase">
+    <button type="button" class="pass-icon-btn btn-eye" onclick="togglePass('newPass', this)">
+      <i class="fa-solid fa-eye-slash"></i>
+    </button>
+    <button type="button" class="pass-icon-btn btn-clear" onclick="clearField('newPass','newPassError')">✖</button>
+  </div>
+  <div class="error-msg" id="newPassError"></div>
+</div>
+
+<button onclick="changePassword()">Update Password</button>
+
+<div class="success-msg" id="successMsg"></div>
+</div>
+
+<!-- ===== ORDERS ===== -->
+<h2>My Orders</h2>
+<div id="ordersContainer"></div>
+<p id="emptyOrdersMessage"></p>
+
+<footer class="footer">
+  <div class="footer-section">
+    <h2>About Us</h2>
+    <p>ChicCloset provides ready-made coordinated outfits for every occasion.</p>
+  </div>
+
+  <div class="footer-section">
+    <h2>Customer Service</h2>
+    <p>Email: <a href="mailto:support@chiccloset.com">support@chiccloset.com</a></p>
+    <p>Phone: <a href="tel:+9665XXXXXXXX">+966 543145036</a></p>
+  </div>
+
+  <div class="footer-section">
+    <h2>Follow Us</h2>
+    <ul>
+      <li><a href="https://www.instagram.com/chiccloset_0166">Instagram</a></li>
+      <li><a href="https://x.com/ChicClosethrcp">X</a></li>
+      <li><a href="https://www.tiktok.com/@chiccloset448">TikTok</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+
+  // ================== Password Field Icons ==================
+function togglePass(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  const isHidden = input.type === "password";
+  input.type = isHidden ? "text" : "password";
+  const icon = btn.querySelector("i");
+  if (icon) {
+    icon.className = isHidden ? "fa-solid fa-eye" : "fa-solid fa-eye-slash";
+  }
+}
+
+function clearField(inputId, errorId) {
+  const input = document.getElementById(inputId);
+  const error = document.getElementById(errorId);
+
+  if (input) {
+    input.value = "";
+    input.classList.remove("is-invalid");
+    showIcons(inputId);
+  }
+
+  if (error) {
+    error.textContent = "";
+  }
+}
+
+function showIcons(inputId) {
+  const input = document.getElementById(inputId);
+  const wrapper = input?.closest(".pass-field");
+  if (!wrapper) return;
+  const val = input.value;
+  wrapper.querySelectorAll(".pass-icon-btn").forEach(btn => {
+    btn.style.display = val ? "block" : "none";
+  });
+}
+  // ================== update pass ==================
+
+  function setError(id, msg, inputId) {
+  const errorEl = document.getElementById(id);
+  const inputEl = document.getElementById(inputId);
+
+  if (errorEl) errorEl.textContent = msg;
+
+  if (inputEl) {
+    if (msg) inputEl.classList.add("is-invalid");
+    else inputEl.classList.remove("is-invalid");
+  }
+}
+
+function changePassword() {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+  const oldPass = document.getElementById("oldPass").value.trim();
+  const newPass = document.getElementById("newPass").value.trim();
+
+  let index = users.findIndex(u => u.email === user.email);
+
+  setError("oldPassError", "", "oldPass");
+  setError("newPassError", "", "newPass");
+
+  if (index === -1) {
+    setError("oldPassError", "User not found", "oldPass");
+    return;
+  }
+
+
+  if (!oldPass) {
+    setError("oldPassError", "Old password is required", "oldPass");
+    return;
+  }
+
+  if (!newPass) {
+    setError("newPassError", "New password is required", "newPass");
+    return;
+  }
+
+
+  if (users[index].password !== oldPass) {
+    setError("oldPassError", "Old password is incorrect", "oldPass");
+    return;
+  }
+
+
+
+  if (newPass.length < 8 || !/[A-Z]/.test(newPass)) {
+    setError("newPassError", "Password must be 8+ chars and include uppercase", "newPass");
+    return;
+  }
+
+  users[index].password = newPass;
+  user.password = newPass;
+
+  localStorage.setItem("users", JSON.stringify(users));
+  localStorage.setItem("currentUser", JSON.stringify(user));
+
+  document.getElementById("oldPass").value = "";
+  document.getElementById("newPass").value = "";
+
+  document.getElementById("successMsg").textContent =
+    "Password updated successfully! 🎉";
+
+  setTimeout(() => {
+    document.getElementById("successMsg").textContent = "";
+  }, 3000);
+}
+
+// ================== Navbar ==================
+function updateNavbar() {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const loginLink = document.getElementById("login-link");
+  const logoutBtn = document.getElementById("logout-btn");
+
+  if (user) {
+    const username = user.email.split("@")[0];
+    loginLink.innerHTML = `<i class="fa-solid fa-user"></i> ${username}`;
+    loginLink.href = "profile.html";
+    logoutBtn.style.display = "block";
+  } else {
+    loginLink.innerHTML = `<i class="fa-solid fa-user"></i> Login`;
+    loginLink.href = "login.html";
+    logoutBtn.style.display = "none";
+  }
+}
+updateNavbar();
+
+// ================== Logout ==================
+function logout() {
+  localStorage.removeItem("currentUser");
+  alert("Logged out!");
+  window.location.href = "home.html";
+}
+
+// ================== Cart Count ==================
+function updateCartCount() {
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  let cart = user ? JSON.parse(localStorage.getItem("cart_" + user.email)) || [] : [];
+  let totalQty = 0;
+  cart.forEach(item => { totalQty += Number(item.quantity); });
+  const count = document.getElementById("cart-count");
+  if (count) count.textContent = totalQty;
+}
+updateCartCount();
+
+// ================== Load User ==================
+const user = JSON.parse(localStorage.getItem("currentUser"));
+document.addEventListener("input", (e) => {
+  if (e.target.id === "oldPass") {
+    e.target.classList.remove("is-invalid");
+    document.getElementById("oldPassError").textContent = "";
+  }
+
+  if (e.target.id === "newPass") {
+    e.target.classList.remove("is-invalid");
+    document.getElementById("newPassError").textContent = "";
+  }
+
+  if (e.target.id === "oldPass" || e.target.id === "newPass") {
+    showIcons(e.target.id);
+  }
+
+});
+
+// If not logged in → go to login
+if (!user) {
+  window.location.href = "login.html";
+}
+
+// ================== Show Profile Info ==================
+function showInfo(profileData) {
+  document.getElementById("profileName").textContent =
+    profileData.firstName + " " + profileData.lastName;
+
+  document.getElementById("profileEmail").textContent =
+    profileData.email;
+  document.getElementById("profilePhone").textContent =
+    profileData.phone;
+  document.getElementById("profileCountry").textContent =
+    profileData.country;
+  document.getElementById("profileCity").textContent =
+    profileData.city;
+  document.getElementById("profileAddress").textContent =
+    profileData.address;
+
+  document.getElementById("profileInfo").style.display = "block";
+  document.getElementById("profileForm").style.display = "none";
+}
+
+// ================== Show Edit Form ==================
+function showEditForm() {
+  const profileData = JSON.parse(localStorage.getItem("profile_" + user.email));
+
+  document.getElementById("formEmail").textContent = user.email;
+
+  if (profileData) {
+    document.getElementById("inputFirstName").value = profileData.firstName || "";
+    document.getElementById("inputLastName").value = profileData.lastName || "";
+    document.getElementById("inputPhone").value = profileData.phone || "";
+    document.getElementById("inputCountry").value = profileData.country || "";
+    document.getElementById("inputCity").value = profileData.city || "";
+    document.getElementById("inputAddress").value = profileData.address || "";
+  }
+
+  document.getElementById("profileInfo").style.display = "none";
+  document.getElementById("profileForm").style.display = "flex";
+}
+
+// ================== Save Profile ==================
+function saveProfile() {
+  const profileData = {
+    firstName: document.getElementById("inputFirstName").value.trim(),
+    lastName: document.getElementById("inputLastName").value.trim(),
+    email: user.email,
+    phone: document.getElementById("inputPhone").value.trim(),
+    country: document.getElementById("inputCountry").value.trim(),
+    city: document.getElementById("inputCity").value.trim(),
+    address: document.getElementById("inputAddress").value.trim()
+  };
+
+  // Save to localStorage
+  localStorage.setItem("profile_" + user.email, JSON.stringify(profileData));
+
+  // Show updated info
+  showInfo(profileData);
+}
+
+// ================== On Page Load ==================
+const profileData = JSON.parse(localStorage.getItem("profile_" + user.email));
+
+if (profileData) {
+  // Profile exists → show info
+  showInfo(profileData);
+} else {
+  // No profile yet → show form to fill
+  document.getElementById("formEmail").textContent = user.email;
+  document.getElementById("profileForm").style.display = "flex";
+}
+
+// ================== Orders ==================
+const orders = JSON.parse(localStorage.getItem("orders_" + user.email)) || [];
+
+if (orders.length === 0) {
+  document.getElementById("emptyOrdersMessage").textContent = "No orders yet.";
+} else {
+  const ordersDiv = document.getElementById("ordersContainer");
+
+  orders.forEach(order => {
+    const orderBox = document.createElement("div");
+    orderBox.classList.add("order-box");
+
+    const orderDate = document.createElement("h3");
+    orderDate.textContent = "Order Date: " + order.date;
+
+    const orderList = document.createElement("ul");
+
+    order.items.forEach(item => {
+      const listItem = document.createElement("li");
+      listItem.classList.add("order-item");
+
+      const image = document.createElement("img");
+      image.src = item.image;
+      image.alt = item.name;
+      image.classList.add("order-item-image");
+
+      const details = document.createElement("div");
+      details.classList.add("order-item-details");
+
+      const name = document.createElement("span");
+      name.classList.add("order-item-name");
+      name.textContent = item.name;
+
+      const price = document.createElement("span");
+      price.classList.add("order-item-price");
+      price.textContent = item.price + " SAR";
+
+      const size = document.createElement("span");
+      size.classList.add("order-item-size");
+
+      let sizes = [];
+      if (item.topSize) sizes.push("Top: " + item.topSize);
+      if (item.pantsSize) sizes.push("Pants: " + item.pantsSize);
+      if (item.shoesSize) sizes.push("Shoes: " + item.shoesSize);
+      size.textContent = sizes.join(" | ");
+
+      details.appendChild(name);
+      details.appendChild(size);
+      details.appendChild(price);
+      listItem.appendChild(image);
+      listItem.appendChild(details);
+      orderList.appendChild(listItem);
+    });
+
+    const total = document.createElement("p");
+    total.innerHTML = `<strong>Total:</strong> ${order.total} SAR`;
+
+    orderBox.appendChild(orderDate);
+    orderBox.appendChild(orderList);
+    orderBox.appendChild(total);
+    ordersDiv.appendChild(orderBox);
+  });
+}
+
+</script>
+</body>
+</html>

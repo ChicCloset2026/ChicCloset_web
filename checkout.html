@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout</title>
+  <link rel="stylesheet" href="checkout.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="navbar">
+  <a href="index.html" class="logo">
+    <img src="images/logo.png" alt="ChicCloset Logo">
+  </a>
+  <ul class="nav-icons-links">
+    <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+    <li><a href="index.html#shopNow"><i class="fa-solid fa-store"></i> Shop Now</a></li>
+    <li><a href="index.html#policies"><i class="fa-solid fa-file-lines"></i> Policies</a></li>
+    <li><a href="favorites_page.html"><i class="fa-solid fa-heart"></i> Wishlist</a></li>
+    <li class="cart-item-nav">
+      <a href="cart.html" class="cart-link">
+        <i class="fa-solid fa-bag-shopping"></i> Cart
+      </a>
+    </li>
+    <li><a href="login.html" id="login-link"><i class="fa-solid fa-user"></i> Login</a></li>
+    <li><button id="logout-btn" onclick="logout()">Logout</button></li>
+  </ul>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-box">
+    <div class="modal-icon">🎉</div>
+    <h2>Order Placed!</h2>
+    <p>Your order has been placed successfully.<br>You'll receive a confirmation soon.</p>
+    <button class="modal-btn" onclick="window.location.href='home.html'">Back to Home</button>
+  </div>
+</div>
+
+<div class="checkout">
+
+  <!-- LEFT -->
+  <div class="card">
+
+    <div class="title">Checkout</div>
+
+    <!-- CONTACT -->
+    <div class="section">
+      <h4>CONTACT INFORMATION</h4>
+
+      <div class="grid">
+
+        <div class="field">
+          <label for="firstName">First Name</label>
+          <input id="firstName" type="text">
+          <span class="error" id="firstNameError"></span>
+        </div>
+
+        <div class="field">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" type="text">
+          <span class="error" id="lastNameError"></span>
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input id="email" type="email" placeholder="example@email.com">
+          <span class="error" id="emailError"></span>
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input id="phone" type="text" placeholder="05XXXXXXXX" maxlength="10">
+          <span class="error" id="phoneError"></span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ADDRESS -->
+    <div class="section">
+      <h4>SHIPPING ADDRESS</h4>
+
+      <div class="grid">
+
+        <div class="field">
+          <label for="country">Country</label>
+          <select id="country">
+            <option value=""> Select Country </option>
+            <option value="Saudi Arabia">Saudi Arabia 🇸🇦</option>
+            <option value="UAE">UAE 🇦🇪</option>
+            <option value="Kuwait">Kuwait 🇰🇼</option>
+            <option value="Bahrain">Bahrain 🇧🇭</option>
+            <option value="Qatar">Qatar 🇶🇦</option>
+            <option value="Oman">Oman 🇴🇲</option>
+            <option value="Jordan">Jordan 🇯🇴</option>
+            <option value="Egypt">Egypt 🇪🇬</option>
+          </select>
+          <span class="error" id="countryError"></span>
+        </div>
+
+        <div class="field">
+          <label for="city">City</label>
+          <select id="city">
+            <option value=""> Select City </option>
+          </select>
+          <span class="error" id="cityError"></span>
+        </div>
+
+        <div class="field" style="grid-column: 1 / -1;">
+          <label for="address">Address</label>
+          <input id="address" type="text" placeholder="Street name, building number">
+          <span class="error" id="addressError"></span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SHIPPING -->
+    <div class="section">
+      <h4>SHIPPING METHOD</h4>
+
+      <div class="options">
+
+        <div class="option">
+          <input type="radio" name="ship" id="s1">
+          <label for="s1" class="ship-card">
+            <img src="images/redbox.png">
+            <div>
+              <div class="name">RedBox</div>
+              <small>2 - 3 business days</small>
+            </div>
+          </label>
+        </div>
+
+        <div class="option">
+          <input type="radio" name="ship" id="s2">
+          <label for="s2" class="ship-card">
+            <img src="images/smsa.png">
+            <div>
+              <div class="name">SMSA Express</div>
+              <small>2 - 4 business days</small>
+            </div>
+          </label>
+        </div>
+
+        <div class="option">
+          <input type="radio" name="ship" id="s3">
+          <label for="s3" class="ship-card">
+            <img src="images/aramex.png">
+            <div>
+              <div class="name">Aramex</div>
+              <small>2 - 4 business days</small>
+            </div>
+          </label>
+        </div>
+
+      </div>
+
+      <span class="error" id="shipError"></span>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="section">
+      <h4>PAYMENT METHOD</h4>
+
+      <div class="card-payment">
+
+        <div class="card-icons">
+          <img src="images/card_types.jpg">
+        </div>
+
+        <div class="field full">
+          <label for="cardNumber">Card Number</label>
+          <input id="cardNumber" type="text" placeholder="1234 5678 9012 3456" maxlength="19">
+          <span class="error" id="cardNumberError"></span>
+        </div>
+
+        <div class="field full">
+          <label>Name on Card</label>
+          <input id="cardName" type="text" placeholder="Full Name">
+          <span class="error" id="cardNameError"></span>
+        </div>
+
+        <div class="grid">
+
+          <div class="field">
+            <label>Expiry Date</label>
+            <input id="expiry" type="text" placeholder="MM / YY" maxlength="7">
+            <span class="error" id="expiryError"></span>
+          </div>
+
+          <div class="field">
+            <label>CVV</label>
+            <input id="cvv" type="text" placeholder="123" maxlength="3">
+            <span class="error" id="cvvError"></span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <button id="payBtn">Pay Now</button>
+
+  </div>
+
+  <!-- RIGHT -->
+  <div class="summary">
+
+    <h3 class="summary-title">Order Summary</h3>
+
+    <div id="product-list"></div>
+
+    <div class="row">
+      <span>Subtotal</span>
+      <span id="subtotal">0 SAR</span>
+    </div>
+
+    <div class="row">
+      <span>Taxes (15%)</span>
+      <span id="taxes">0 SAR</span>
+    </div>
+
+    <div class="row">
+      <span>Shipping</span>
+      <span id="shipping-cost">0 SAR</span>
+    </div>
+
+    <div class="row total">
+      <span>Total Amount</span>
+      <span id="total-price">0 SAR</span>
+    </div>
+
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-section">
+    <h2>About Us</h2>
+    <p>ChicCloset provides ready-made coordinated outfits for every occasion.</p>
+  </div>
+
+  <div class="footer-section">
+    <h2>Customer Service</h2>
+    <p>Email: <a href="mailto:support@chiccloset.com">support@chiccloset.com</a></p>
+    <p>Phone: <a href="tel:+9665XXXXXXXX">+966 543145036</a></p>
+  </div>
+
+  <div class="footer-section">
+    <h2>Follow Us</h2>
+    <ul>
+      <li><a href="https://www.instagram.com/chiccloset_0166">Instagram</a></li>
+      <li><a href="https://x.com/ChicClosethrcp">X</a></li>
+      <li><a href="https://www.tiktok.com/@chiccloset448">TikTok</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+// ================== Navbar ==================
+
+// Update the navigation bar according to the user's login status
+function updateNavbar() {
+
+  // Retrieve the currently logged-in user from localStorage
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+
+  // Select the login link and logout button elements
+  const loginLink = document.getElementById("login-link");
+  const logoutBtn = document.getElementById("logout-btn");
+
+  // If a user is logged in
+  if (user) {
+
+    // Extract username from email
+    const username = user.email.split("@")[0];
+
+    // Show username
+    loginLink.innerHTML = `
+      <i class="fa-solid fa-user"></i> ${username}
+    `;
+
+    // Go to profile page
+    loginLink.href = "profile.html";
+
+    // Show logout button
+    logoutBtn.style.display = "block";
+
+  } else {
+
+    // Default login text
+    loginLink.innerHTML = `
+      <i class="fa-solid fa-user"></i> Login
+    `;
+
+    // IMPORTANT
+    loginLink.href = "login.html";
+
+    // Hide logout button
+    logoutBtn.style.display = "none";
+  }
+}
+
+// Run navbar update
+updateNavbar();
+
+
+// Log out the current user
+function logout() {
+
+  localStorage.removeItem("currentUser");
+
+  alert("Logged out!");
+
+  window.location.href = "home.html";
+}
+
+
+// ================== Cities per Country ==================
+// Object containing available cities for each country
+const citiesData = {
+  "Saudi Arabia": ["Riyadh","Jeddah","Mecca","Medina","Dammam","Khobar","Dhahran","Taif","Tabuk","Abha","Najran","Jizan","Hail","Buraidah","Khamis Mushait"],
+  "UAE": ["Dubai","Abu Dhabi","Sharjah","Ajman","Fujairah","Ras Al Khaimah","Umm Al Quwain"],
+  "Kuwait": ["Kuwait City","Hawalli","Salmiya","Farwaniya","Ahmadi","Jahra"],
+  "Bahrain": ["Manama","Riffa","Muharraq","Hamad Town","Sitra","Isa Town"],
+  "Qatar": ["Doha","Al Wakrah","Al Khor","Al Rayyan","Lusail","Mesaieed"],
+  "Oman": ["Muscat","Salalah","Sohar","Nizwa","Sur","Ibri"],
+  "Jordan": ["Amman","Zarqa","Irbid","Aqaba","Madaba","Jerash"],
+  "Egypt": ["Cairo","Alexandria","Giza","Sharm El Sheikh","Luxor","Aswan","Port Said","Hurghada"]
+};
+
+// ================== Data ==================
+// Retrieve the current user
+const user = JSON.parse(localStorage.getItem("currentUser"));
+
+// Array to store cart items
+let cart = [];
+
+// Load the cart for the logged-in user
+if (user) {
+  cart = JSON.parse(localStorage.getItem("cart_" + user.email)) || [];
+} else {
+  cart = [];
+}
+
+// Tax rate (15%)
+let taxRate = 0.15;
+
+// Shipping prices by shipping option
+let shippingPrices = {
+  s1: 16,
+  s2: 21,
+  s3: 22
+};
+
+// Stores the currently selected shipping cost
+let selectedShipping = 0;
+
+
+// ================== Country → City Dropdown ==================
+// Update city options when the selected country changes
+document.getElementById("country").addEventListener("change", function(){
+  const selectedCountry = this.value;
+  const citySelect = document.getElementById("city");
+
+  // Reset city dropdown to the default option
+  citySelect.innerHTML = '<option value=""> Select City </option>';
+
+  // Populate cities if the selected country exists in citiesData
+  if (selectedCountry && citiesData[selectedCountry]) {
+    citiesData[selectedCountry].forEach(city => {
+      const opt = document.createElement("option");
+      opt.value = city;
+      opt.textContent = city;
+      citySelect.appendChild(opt);
+    });
+  }
+
+  // Clear any validation error for country
+  clearError("country");
+});
+
+// Clear city validation error when a city is selected
+document.getElementById("city").addEventListener("change", function(){
+  if (this.value !== "") clearError("city");
+});
+
+
+// ================== Card Number Auto-Format ==================
+// Automatically format card number into groups of 4 digits
+document.getElementById("cardNumber").addEventListener("input", function(){
+  let val = this.value.replace(/\D/g, "").substring(0, 16);
+  this.value = val.replace(/(.{4})/g, "$1 ").trim();
+});
+
+
+// ================== Expiry Auto-Format ==================
+// Automatically format expiry date as MM / YY
+document.getElementById("expiry").addEventListener("input", function(){
+  let val = this.value.replace(/\D/g, "").substring(0, 4);
+  if (val.length >= 3) {
+    this.value = val.substring(0, 2) + " / " + val.substring(2);
+  } else {
+    this.value = val;
+  }
+});
+
+
+// ================== Block Numbers in Name Fields ==================
+// Prevent users from entering numbers in text fields
+function blockNumbers(id) {
+  document.getElementById(id).addEventListener("keypress", function(e){
+    if (/[0-9]/.test(e.key)) e.preventDefault();
+  });
+
+  document.getElementById(id).addEventListener("input", function(){
+    this.value = this.value.replace(/[0-9]/g, "");
+  });
+}
+
+// Apply number blocking to these fields
+blockNumbers("firstName");
+blockNumbers("lastName");
+blockNumbers("cardName");
+
+
+// ================== Only Numbers in Phone and CVV ==================
+// Allow only numeric input
+function onlyNumbers(id) {
+  document.getElementById(id).addEventListener("keypress", function(e){
+    if (!/[0-9]/.test(e.key)) e.preventDefault();
+  });
+}
+
+// Apply numeric-only validation
+onlyNumbers("phone");
+onlyNumbers("cvv");
+
+
+// ================== View the Order ==================
+// Display all products in the checkout summary
+function displayCheckout(){
+  const productList = document.getElementById("product-list");
+  productList.innerHTML = "";
+
+  // If cart is empty, show a message
+  if(cart.length === 0){
+    productList.innerHTML = "<p>Your cart is empty</p>";
+    updateTotal();
+    return;
+  }
+
+  // Loop through all products and display them
+  cart.forEach(product => {
+    productList.innerHTML += `
+      <div class="product">
+        <img src="${product.image}">
+        <div>
+          <div><b>${product.name}</b></div>
+          <div>Qty: ${product.quantity}</div>
+          <div class="price">${product.price * product.quantity} SAR</div>
+        </div>
+      </div>
+    `;
+  });
+
+  // Update order totals
+  updateTotal();
+}
+
+
+// ================== Calculations ==================
+// Calculate subtotal, tax, shipping, and total price
+function updateTotal(){
+  let subtotal = 0;
+
+  // Sum all product prices multiplied by quantity
+  cart.forEach(product => {
+    subtotal += product.price * product.quantity;
+  });
+
+  // Calculate tax and final total
+  let tax = subtotal * taxRate;
+  let total = subtotal + tax + selectedShipping;
+
+  // Update values in the page
+  document.getElementById("subtotal").innerText = subtotal.toFixed(2) + " SAR";
+  document.getElementById("taxes").innerText = tax.toFixed(2) + " SAR";
+  document.getElementById("shipping-cost").innerText = selectedShipping + " SAR";
+  document.getElementById("total-price").innerText = total.toFixed(2) + " SAR";
+}
+
+
+// ================== Change Shipping ==================
+// Update shipping cost when the user selects a shipping method
+document.querySelectorAll('input[name="ship"]').forEach(input => {
+  input.addEventListener("change", function(){
+    selectedShipping = shippingPrices[this.id];
+
+    // Clear shipping validation error
+    document.getElementById("shipError").textContent = "";
+
+    // Recalculate totals
+    updateTotal();
+  });
+});
+
+
+// ================== Dynamic Error Messages ==================
+// Show an error message and highlight the field
+function showError(id, message) {
+  const errEl = document.getElementById(id + "Error");
+  const inputEl = document.getElementById(id);
+
+  if (errEl) errEl.textContent = message;
+
+  if (inputEl) {
+    inputEl.classList.add("input-error");
+    inputEl.classList.remove("input-valid");
+  }
+}
+
+// Clear the error message and mark the field as valid
+function clearError(id) {
+  const errEl = document.getElementById(id + "Error");
+  const inputEl = document.getElementById(id);
+
+  if (errEl) errEl.textContent = "";
+
+  if (inputEl) {
+    inputEl.classList.remove("input-error");
+    inputEl.classList.add("input-valid");
+  }
+}
+
+
+// ================== Validation Functions ==================
+// Check that a required field is not empty
+function validateRequired(id, message) {
+  const input = document.getElementById(id);
+
+  if (input.value.trim() === "") {
+    showError(id, message);
+    return false;
+  }
+
+  clearError(id);
+  return true;
+}
+
+// Validate email format
+function validateEmail() {
+  const email = document.getElementById("email").value;
+  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (email.trim() === "") {
+    showError("email", "Email is required");
+    return false;
+  }
+
+  if (!pattern.test(email)) {
+    showError("email", "Invalid email format (example@email.com)");
+    return false;
+  }
+
+  clearError("email");
+  return true;
+}
+
+// Validate Saudi phone number format
+function validatePhone() {
+  const phone = document.getElementById("phone").value;
+  const pattern = /^05[0-9]{8}$/;
+
+  if (phone.trim() === "") {
+    showError("phone", "Phone number is required");
+    return false;
+  }
+
+  if (!pattern.test(phone)) {
+    showError("phone", "Phone must start with 05 and contain 10 digits");
+    return false;
+  }
+
+  clearError("phone");
+  return true;
+}
+
+// Validate credit card number (16 digits)
+function validateCardNumber() {
+  const cardNumber = document.getElementById("cardNumber").value.replace(/\s/g, "");
+
+  if (cardNumber === "") {
+    showError("cardNumber", "Card number is required");
+    return false;
+  }
+
+  if (!/^[0-9]{16}$/.test(cardNumber)) {
+    showError("cardNumber", "Card number must be 16 digits");
+    return false;
+  }
+
+  clearError("cardNumber");
+  return true;
+}
+
+
+// Validate expiry date format MM / YY and ensure the card is not expired
+function validateExpiry() {
+  // Get the entered expiry date and remove extra spaces
+  const expiry = document.getElementById("expiry").value.trim();
+
+  // Match format MM / YY and capture month and year separately
+  const pattern = /^(0[1-9]|1[0-2])\s?\/\s?([0-9]{2})$/;
+
+  // Check if the field is empty
+  if (expiry === "") {
+    showError("expiry", "Expiry date is required");
+    return false;
+  }
+
+  // Check if the format is valid
+  const match = expiry.match(pattern);
+  if (!match) {
+    showError("expiry", "Use format MM / YY");
+    return false;
+  }
+
+  // Extract month and year from the input
+  const month = parseInt(match[1]); // MM
+  const year = parseInt(match[2]);  // YY
+
+  // Get the current month and year (last two digits)
+  const today = new Date();
+  const currentMonth = today.getMonth() + 1;      // January = 1
+  const currentYear = today.getFullYear() % 100;  // Example: 2026 -> 26
+
+  // Most bank cards usually expire within 5 years from the issue date,
+  // so allow only dates up to 5 years in the future.
+  const maxAllowedYear = currentYear + 5;
+
+  // Reject years earlier than the current year
+  if (year < currentYear) {
+    showError("expiry", "Card has expired");
+    return false;
+  }
+
+  // Reject years that are too far in the future
+  if (year > maxAllowedYear) {
+    showError("expiry", "Invalid expiry year");
+    return false;
+  }
+
+  // If the entered year is the current year,
+  // the month must be the current month or later
+  if (year === currentYear && month < currentMonth) {
+    showError("expiry", "Card has expired");
+    return false;
+  }
+
+  // If all checks pass
+  clearError("expiry");
+  return true;
+}
+
+// Validate CVV (3 digits)
+function validateCVV() {
+  const cvv = document.getElementById("cvv").value;
+
+  if (cvv.trim() === "") {
+    showError("cvv", "CVV is required");
+    return false;
+  }
+
+  if (!/^[0-9]{3}$/.test(cvv)) {
+    showError("cvv", "CVV must be 3 digits");
+    return false;
+  }
+
+  clearError("cvv");
+  return true;
+}
+
+// Ensure a shipping method is selected
+function validateShipping() {
+  const shippingSelected = document.querySelector('input[name="ship"]:checked');
+
+  if (!shippingSelected) {
+    document.getElementById("shipError").textContent = "Please select a shipping method";
+    return false;
+  }
+
+  document.getElementById("shipError").textContent = "";
+  return true;
+}
+
+// Validate that a country is selected
+function validateCountry() {
+  if (document.getElementById("country").value === "") {
+    showError("country", "Please select a country");
+    return false;
+  }
+
+  clearError("country");
+  return true;
+}
+
+// Validate that a city is selected
+function validateCity() {
+  if (document.getElementById("city").value === "") {
+    showError("city", "Please select a city");
+    return false;
+  }
+
+  clearError("city");
+  return true;
+}
+
+
+// ================== Real-Time Validation ==================
+// Validate fields when the user leaves each input
+document.getElementById("firstName").addEventListener("blur", function(){
+  validateRequired("firstName", "First name is required");
+});
+
+document.getElementById("lastName").addEventListener("blur", function(){
+  validateRequired("lastName", "Last name is required");
+});
+
+document.getElementById("email").addEventListener("blur", validateEmail);
+document.getElementById("phone").addEventListener("blur", validatePhone);
+document.getElementById("country").addEventListener("blur", validateCountry);
+document.getElementById("city").addEventListener("blur", validateCity);
+
+document.getElementById("address").addEventListener("blur", function(){
+  validateRequired("address", "Address is required");
+});
+
+document.getElementById("cardNumber").addEventListener("blur", validateCardNumber);
+
+document.getElementById("cardName").addEventListener("blur", function(){
+  validateRequired("cardName", "Name on card is required");
+});
+
+document.getElementById("expiry").addEventListener("blur", validateExpiry);
+document.getElementById("cvv").addEventListener("blur", validateCVV);
+
+
+// ================== Verification Before Payment ==================
+// Validate all fields when the Pay button is clicked
+document.getElementById("payBtn").addEventListener("click", function(e){
+  e.preventDefault();
+
+  let isValid = true;
+
+  // Validate personal information
+  if (!validateRequired("firstName", "First name is required")) isValid = false;
+  if (!validateRequired("lastName", "Last name is required")) isValid = false;
+  if (!validateEmail()) isValid = false;
+  if (!validatePhone()) isValid = false;
+
+  // Validate shipping address
+  if (!validateCountry()) isValid = false;
+  if (!validateCity()) isValid = false;
+  if (!validateRequired("address", "Address is required")) isValid = false;
+
+  // Validate shipping method
+  if (!validateShipping()) isValid = false;
+
+  // Validate payment details
+  if (!validateCardNumber()) isValid = false;
+  if (!validateRequired("cardName", "Name on card is required")) isValid = false;
+  if (!validateExpiry()) isValid = false;
+  if (!validateCVV()) isValid = false;
+
+  // If all validations pass
+  if (isValid) {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+
+  const profileData = {
+  firstName: document.getElementById("firstName").value,
+  lastName: document.getElementById("lastName").value,
+  email: document.getElementById("email").value,
+  phone: document.getElementById("phone").value,
+  country: document.getElementById("country").value,
+  city: document.getElementById("city").value,
+  address: document.getElementById("address").value
+};
+
+localStorage.setItem(
+  "profile_" + user.email,
+  JSON.stringify(profileData)
+);
+
+    // Get previous orders
+let orders = JSON.parse(localStorage.getItem("orders_" + user.email)) || [];
+
+// Calculate total
+let subtotal = 0;
+
+cart.forEach(product => {
+  subtotal += product.price * product.quantity;
+});
+
+let tax = subtotal * taxRate;
+
+let finalTotal = subtotal + tax + selectedShipping;
+
+// Create new order object
+let newOrder = {
+  items: cart,
+  date: new Date().toLocaleDateString(),
+  total: finalTotal
+};
+
+// Add order
+orders.push(newOrder);
+
+// Save orders
+localStorage.setItem("orders_" + user.email, JSON.stringify(orders));
+        // Clear the user's cart after successful payment
+    if (user) {
+      localStorage.removeItem("cart_" + user.email);
+    }
+
+    // Show the success modal
+    document.getElementById("successModal").classList.add("show");
+  }
+
+  // No alert is shown for errors because messages appear under each field
+});
+
+
+// ================== Initial Display ==================
+// Display the checkout summary when the page loads
+displayCheckout();
+
+</script>
+</body>
+</html>

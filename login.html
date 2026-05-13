@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo.png" alt="ChicCloset Logo">
+  </a>
+  <ul class="nav-icons-links">
+    <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+    <li><a href="index.html#shopNow"><i class="fa-solid fa-store"></i> Shop Now</a></li>
+    <li><a href="index.html#policies"><i class="fa-solid fa-file-lines"></i> Policies</a></li>
+    <li><a href="favorites_page.html"><i class="fa-solid fa-heart"></i> Wishlist</a></li>
+    <li class="cart-item-nav">
+      <a href="cart.html" class="cart-link">
+        <i class="fa-solid fa-bag-shopping"></i> Cart
+        <span id="cart-count">0</span>
+      </a>
+    </li>
+    <li><a href="login.html" id="login-link"><i class="fa-solid fa-user"></i> Login</a></li>
+    <li><button id="logout-btn" onclick="logout()">Logout</button></li>
+  </ul>
+</div>
+
+  <div class="container">
+    <div class="image-container">
+      <img src="images/login.png" alt="Background Image" class="background-image">
+    </div>
+    <div class="box">
+      <!-- RETURN TO HOME-->
+      <div class="top-back">
+        <a href="index.html">❮</a>
+        <span>Back to Home Page</span>
+      </div>
+      <a href="index.html">
+        <img src="images/logo.png" class="logo" alt="ChicCloset Logo">
+      </a>
+      <div class="title">Your journey starts here!</div>
+
+      <!-- FORM (lOGIN IN)-->
+      <form id="loginForm">
+        <!-- (1) EMAIL PART-->
+        <div class="field">
+          <label for="email">Email</label>
+          <div class="inputs">
+            <input id="email" type="email" placeholder="you@example.com">
+            <button type="button" class="icon-btn clear-btn-e" onclick="clearEmail()">✖</button>
+          </div>
+          <div class="error-msg" id="emailError"></div>
+        </div>
+
+        <!-- (2) PASSWORD PART-->
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="inputs">
+            <input id="password" type="password" placeholder="Enter your password">
+            <button type="button" class="icon-btn hide-btn-p" onclick="hidePass()">👁</button>
+            <button type="button" class="icon-btn clear-btn-p" onclick="clearPass()">✖</button>
+          </div>
+          <div class="error-msg" id="passwordError"></div>
+        </div>
+
+        <div class="link">
+          <a href="forgot_password.html">Forgot Password?</a>
+        </div>
+
+        <button type="button" class="btn-main" onclick="login()">Sign in</button>
+      </form>
+
+      <div class="small-text">Don't have an account?</div>
+      <a href="create_account.html" class="btn-secondary">Create Account</a>
+    </div>
+  </div>
+
+<footer class="footer">
+  <div class="footer-section">
+    <h2>About Us</h2>
+    <p>ChicCloset provides ready-made coordinated outfits for every occasion.</p>
+  </div>
+
+  <div class="footer-section">
+    <h2>Customer Service</h2>
+    <p>Email: <a href="mailto:support@chiccloset.com">support@chiccloset.com</a></p>
+    <p>Phone: <a href="tel:+9665XXXXXXXX">+966 543145036</a></p>
+  </div>
+
+  <div class="footer-section">
+    <h2>Follow Us</h2>
+    <ul>
+      <li><a href="https://www.instagram.com/chiccloset_0166">Instagram</a></li>
+      <li><a href="https://x.com/ChicClosethrcp">X</a></li>
+      <li><a href="https://www.tiktok.com/@chiccloset448">TikTok</a></li>
+    </ul>
+  </div>
+</footer>
+
+  <script src="auth.js" defer></script>
+</body>
+</html>
