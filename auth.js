@@ -49,7 +49,7 @@ function logout() {
   alert("Logged out!");
 
   // Redirect the user to the home page
-  window.location.href = "home.html";
+  window.location.href = "index.html";
 }
 
 /* =========================================================
@@ -254,7 +254,7 @@ if (pendingRedirect) {
 } else {
 
   // Normal login redirect
-  window.location.href = "home.html";
+  window.location.href = "index.html";
 }
 }
 
